@@ -19,8 +19,12 @@ It parses, normalizes, and reasons over EMBA output.
 Linux (recommended: Ubuntu / Kali)
 Python 3.10+
 EMBA Tool
-uvx
 
-Python dependencies
-mcp
-pydantic
+
+🛠️ Installation
+
+```bash
+git clone 
+cd EMBA-MCP
+
+```
