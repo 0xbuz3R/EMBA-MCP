@@ -11,7 +11,6 @@ def explain_attack_path(log_dir: Path, finding_index: int = 0) -> Dict:
 
     data = get_high_risk_findings(log_dir)
 
-   
     if "error" in data:
         return {
             "error": data["error"],
@@ -36,56 +35,69 @@ def explain_attack_path(log_dir: Path, finding_index: int = 0) -> Dict:
 
     components = set(f.get("components", []))
     severity = f.get("severity", "unknown")
+    title = f.get("title", "Unnamed finding")
 
-    # ---- Rule-based explanation ----
+    # --------------------------------------------------
+    # SERVICE + CREDENTIALS (ANY NETWORK SERVICE)
+    # --------------------------------------------------
+    if "credentials" in components and any(
+        s in components for s in {"telnet", "ssh", "ftp", "http", "tftp"}
+    ):
+        service = next(
+            s for s in components if s in {"telnet", "ssh", "ftp", "http", "tftp"}
+        )
 
-    if {"telnet", "credentials"} <= components:
         return {
-            "title": f["title"],
+            "title": title,
             "attack_vector": "remote",
-            "entry_point": "telnet service",
+            "entry_point": f"{service} service",
             "preconditions": [
                 "Network access to the device",
-                "Valid or default credentials",
+                "Valid, default, or recoverable credentials",
             ],
-            "exploit_class": "authentication bypass / remote shell access",
+            "exploit_class": "authenticated remote access",
             "attacker_effort": "low",
-            "impact": "Full device compromise",
+            "impact": "Remote shell / service abuse",
             "severity": severity,
             "confidence": "high",
             "why_this_matters": (
-                "Telnet transmits credentials in cleartext and provides "
-                "direct shell access. Combined with embedded credentials, "
-                "this allows trivial compromise of the device."
+                f"The {service} service is reachable and credentials are "
+                "embedded or recoverable, allowing direct remote compromise."
             ),
         }
 
+    # --------------------------------------------------
+    # KERNEL WEAKNESS
+    # --------------------------------------------------
     if "kernel" in components:
         return {
-            "title": f["title"],
+            "title": title,
             "attack_vector": "local or remote",
-            "entry_point": "kernel memory corruption vulnerability",
+            "entry_point": "kernel attack surface",
             "preconditions": [
-                "Ability to trigger kernel code paths",
+                "Ability to reach kernel code paths (local or via services)",
             ],
             "exploit_class": "kernel privilege escalation / RCE",
             "attacker_effort": "medium",
-            "impact": "Root access to device",
+            "impact": "Full device compromise",
             "severity": severity,
             "confidence": "medium",
             "why_this_matters": (
-                "Outdated kernels without modern hardening significantly "
-                "reduce the complexity and cost of exploitation."
+                "Outdated or weakly hardened kernels significantly reduce "
+                "exploit complexity and reliability."
             ),
         }
 
+    # --------------------------------------------------
+    # LOCAL PRIVILEGE ESCALATION
+    # --------------------------------------------------
     if {"binary", "privilege escalation"} <= components:
         return {
-            "title": f["title"],
+            "title": title,
             "attack_vector": "local",
             "entry_point": "privileged binary execution",
             "preconditions": [
-                "Ability to execute local binaries",
+                "Local execution capability",
             ],
             "exploit_class": "local privilege escalation",
             "attacker_effort": "medium",
@@ -93,20 +105,44 @@ def explain_attack_path(log_dir: Path, finding_index: int = 0) -> Dict:
             "severity": severity,
             "confidence": "high",
             "why_this_matters": (
-                "Unsafe libc calls inside privileged binaries enable attackers "
+                "Dangerous functions inside privileged binaries allow attackers "
                 "to hijack execution flow and escalate privileges."
             ),
         }
 
-    # ---- Fallback ----
+    # --------------------------------------------------
+    # CRYPTO + SECRETS
+    # --------------------------------------------------
+    if {"crypto", "credentials"} <= components:
+        return {
+            "title": title,
+            "attack_vector": "offline",
+            "entry_point": "firmware secrets",
+            "preconditions": [
+                "Access to firmware image or filesystem",
+            ],
+            "exploit_class": "offline cracking / key recovery",
+            "attacker_effort": "low to medium",
+            "impact": "Credential disclosure / impersonation",
+            "severity": severity,
+            "confidence": "medium",
+            "why_this_matters": (
+                "Weak cryptography combined with embedded secrets enables "
+                "offline attacks without device interaction."
+            ),
+        }
+
+    # --------------------------------------------------
+    # FALLBACK (FUTURE-PROOF)
+    # --------------------------------------------------
     return {
-        "title": f["title"],
+        "title": title,
         "attack_vector": f.get("attack_vector", "unknown"),
         "exploit_class": "context-dependent",
         "severity": severity,
         "confidence": f.get("confidence", "low"),
         "why_this_matters": (
             "This finding represents a combination of weaknesses whose "
-            "exploitability depends on runtime conditions."
+            "exploitability depends on deployment and runtime conditions."
         ),
     }
