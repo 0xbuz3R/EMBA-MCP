@@ -11,7 +11,7 @@ def explain_attack_path(log_dir: Path, finding_index: int = 0) -> Dict:
 
     data = get_high_risk_findings(log_dir)
 
-    # 🛡️ defensive guard
+   
     if "error" in data:
         return {
             "error": data["error"],
