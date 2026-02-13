@@ -66,6 +66,7 @@ Add the following JSON under the mcpServers section.
 
 ⚠️ Do NOT copy paths blindly — replace them with paths valid on your system.
 
+``` json
 {
   "mcpServers": {
     "emba": {
@@ -77,6 +78,8 @@ Add the following JSON under the mcpServers section.
     }
   }
 }
+
+```
 
 📌 3. How to Fill the Paths Correctly
 🔹 PATH_TO_PYTHON
