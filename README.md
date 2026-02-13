@@ -130,6 +130,6 @@ If configured correctly, Claude will respond without MCP errors.
 
 📽️ Demo
 
-![EMBA-MCP](assets/demo.mp4)
+![EMBA-MCP Demo](assets/demo.gif)
 
 
