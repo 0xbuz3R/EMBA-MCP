@@ -24,7 +24,19 @@ EMBA Tool
 🛠️ Installation
 
 ```bash
-git clone 
+git clone https://github.com/0xbuz3R/EMBA-MCP.git
 cd EMBA-MCP
+
+Set Up a Virtual Environment (Recommended)
+Bash
+python -m venv venv
+# On Windows:
+.\venv\Scripts\activate
+# On macOS:
+source venv/bin/activate
+
+3. Install Dependencies
+Bash
+pip install -e .
 
 ```
