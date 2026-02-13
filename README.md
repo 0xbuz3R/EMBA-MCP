@@ -82,6 +82,7 @@ Add the following JSON under the mcpServers section.
 ```
 
 📌 3. How to Fill the Paths Correctly
+
 🔹 PATH_TO_PYTHON
 
 This must be the Python interpreter where EMBA-MCP is installed.
