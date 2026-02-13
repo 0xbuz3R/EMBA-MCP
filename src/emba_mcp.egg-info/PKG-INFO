@@ -1,0 +1,7 @@
+Metadata-Version: 2.4
+Name: emba-mcp
+Version: 0.1.0
+Summary: EMBA firmware analysis exposed as an MCP server
+Author-email: m3hd <you@example.com>
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown

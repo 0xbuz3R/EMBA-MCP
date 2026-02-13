@@ -1,0 +1,24 @@
+{
+  "emba-b0e46bc15e": {
+    "scan_id": "emba-b0e46bc15e",
+    "firmware": "/home/m3hd/Desktop/DIR600B6_FW215WWb02.bin",
+    "log_dir": "/home/m3hd/Desktop/logs2/emba_scan_DIR600B6_FW215WWb02_631801",
+    "status": "finished",
+    "started_at": 1770805193.296673,
+    "finished_at": 3170804579.1418447,
+    "error": null,
+    "pid": 163893,
+    "meta": {}
+  },
+  "emba-20c2f42874": {
+    "scan_id": "emba-20c2f42874",
+    "firmware": "/home/m3hd/Desktop/fw-monarco-hat-2005.bin",
+    "log_dir": "/home/m3hd/Desktop/logs2/emba_scan_fw-monarco-hat-2005_35be3c",
+    "status": "running",
+    "started_at": 1770956631.7801073,
+    "finished_at": null,
+    "error": null,
+    "pid": 10980,
+    "meta": {}
+  }
+}
