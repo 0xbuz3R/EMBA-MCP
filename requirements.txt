@@ -1,0 +1,16 @@
+# MCP / Server
+mcp>=0.4.0
+fastmcp>=0.2.0
+
+# Python runtime helpers
+pydantic>=2.6.0
+typing-extensions>=4.9.0
+
+# Async
+anyio>=4.2.0
+
+# File & path handling (safe defaults)
+python-dateutil>=2.9.0
+
+# Optional but recommended (logging, stability)
+rich>=13.7.0
