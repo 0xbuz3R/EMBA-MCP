@@ -1,6 +1,22 @@
+# Python temporary files
 __pycache__/
 *.py[cod]
+*$py.class
 *.egg-info/
 dist/
 build/
+
+# EMBA specific & Scan results
+# It is better to keep your personal scan data and output files local
 out.txt
+*.json
+!example_registry.json  # Keep this if you want to provide a template
+
+# Virtual Environments
+venv/
+.venv/
+env/
+
+# OS specific
+.DS_Store
+Thumbs.db
