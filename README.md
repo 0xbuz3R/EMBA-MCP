@@ -39,4 +39,88 @@ source venv/bin/activate
 Bash
 pip install -e .
 
+
 ```
+
+Make sure EMBA is installed in your local machine: **https://github.com/e-m-b-a/emba**
+
+🧩 Claude Desktop MCP Configuration (Required)
+
+To use EMBA-MCP inside Claude Desktop, you must register the MCP server in Claude’s config file.
+This step is mandatory and is the most common setup issue.
+
+📍 1. Locate claude_config_desktop.json
+
+Claude Desktop stores the MCP configuration in the following location:
+
+Linux
+
+~/.config/claude/claude_config_desktop.json
+
+
+If the file does not exist, create it manually.
+
+📍 2. Add EMBA-MCP Server Configuration
+
+Add the following JSON under the mcpServers section.
+
+⚠️ Do NOT copy paths blindly — replace them with paths valid on your system.
+
+{
+  "mcpServers": {
+    "emba": {
+      "command": "<PATH_TO_PYTHON>",
+      "args": ["-m", "emba_mcp.mcp_server"],
+      "env": {
+        "EMBA_HOME": "<PATH_TO_EMBA_DIRECTORY>"
+      }
+    }
+  }
+}
+
+📌 3. How to Fill the Paths Correctly
+🔹 PATH_TO_PYTHON
+
+This must be the Python interpreter where EMBA-MCP is installed.
+Examples:
+``` bash
+which python
+which python3
+
+```
+Typical values:
+
+/usr/bin/python3
+/home/user/.venv/bin/python
+/home/user/.local/bin/python
+
+🔹 PATH_TO_EMBA_DIRECTORY
+
+This must be the root directory of EMBA, where the emba executable exists.
+
+Example:
+
+ls <EMBA_HOME>/emba
+
+Example value:
+
+/home/user/tools/emba
+
+📍 4. Restart Claude Desktop
+
+After saving the file:
+1. Fully close Claude Desktop
+2. Reopen it
+
+Claude will now auto-load the EMBA MCP server
+
+✅ 5. Verify MCP Is Loaded
+
+Inside Claude, try:
+
+List EMBA scans
+or
+Run EMBA scan on firmware
+
+
+If configured correctly, Claude will respond without MCP errors.
