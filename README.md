@@ -129,6 +129,9 @@ Run EMBA scan on firmware
 If configured correctly, Claude will respond without MCP errors.
 
 📽️ Demo
+
+
+
 ![demo](https://github.com/user-attachments/assets/7f81717e-181f-4ab1-80ad-5c038aeb007e)
 
 
